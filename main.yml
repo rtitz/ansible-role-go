@@ -1,14 +1,14 @@
 ---
 - hosts: all
-  become: yes
+  become: false
+  gather_facts: yes
 
   tasks:
     - name: Information
       ansible.builtin.debug:
         msg:
-          - "Hostname {{ ansible_hostname }}"
-          - "FQDN {{ ansible_fqdn }}"
-          - "OS: {{ ansible_lsb.id }} {{ ansible_lsb.release }} ({{ ansible_lsb.description }} / {{ ansible_distribution_version }})"
+          - "Hostname: {{ ansible_hostname }}"
+          - "OS: {{ ansible_distribution }} {{ ansible_distribution_version }}"
           - "KERNEL: {{ ansible_kernel }}"
           - "ARCH: {{ ansible_architecture }}"
           - "IP: {{ ansible_default_ipv4.address }}"
@@ -18,8 +18,13 @@
         prompt: "Press ENTER to continue with installation of Go (Version: {{ go_version }}) (CTRL + C to cancel)"
       when: confirm_playbook
 
-    - ansible.builtin.import_tasks: tasks/go.yml
-      when: configure_go
+    - name: Go Installation (Linux)
+      ansible.builtin.include_tasks: tasks/go.yml
+      when: configure_go and ansible_distribution != 'MacOSX'
+
+    - name: Go Installation (macOS)
+      ansible.builtin.include_tasks: tasks/go_MacOSX.yml
+      when: configure_go and ansible_distribution == 'MacOSX'
 
     - name: Finished
       ansible.builtin.debug:
