@@ -8,7 +8,7 @@
 
 ### Run the Ansible playbook:
 ```zsh
-ansible-playbook -i inventory main.yml
+ansible-playbook -i inventory main.yml -K # For macOS without the -K since sudo is not required
 ```
 
 See: [Ansible documentation](https://docs.ansible.com/)
