@@ -8,7 +8,8 @@
 
 ### Run the Ansible playbook:
 ```zsh
-ansible-playbook -i inventory main.yml -K # For macOS without the -K since sudo is not required
+ansible-playbook -i inventory main.yml -K 
 ```
+  * Ansible will ask for the 'BECOME password', this is your sudo password
 
 See: [Ansible documentation](https://docs.ansible.com/)

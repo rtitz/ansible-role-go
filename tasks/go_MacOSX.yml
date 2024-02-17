@@ -11,14 +11,14 @@
     state: directory
 
 # Download 
-- name: Download GO (for x86_64)
+- name: Download Go (for x86_64)
   ansible.builtin.get_url:
     url: "{{ go_url_x86_64_mac }}"
     dest: "{{ go_download_dir_mac }}/"
   when: ansible_architecture == 'x86_64'
   register: download_go1
 
-- name: Download GO (for aarch64)
+- name: Download Go (for aarch64)
   ansible.builtin.get_url:
     url: "{{ go_url_aarch64_mac }}"
     dest: "{{ go_download_dir_mac }}/"
@@ -26,13 +26,13 @@
   register: download_go2
 
 # Extract and set path
-- name: Extracting GO
+- name: Extracting Go
   ansible.builtin.shell:
     cmd: rm -rf {{ go_install_dir_mac }}/go && tar -C {{ go_install_dir_mac }} -xzf {{ go_download_dir_mac }}/{{ go_version }}*.tar.gz
   changed_when: false
   when: (download_go1.changed) or (download_go2.changed) 
 
-- name: Configure PATH variable
+- name: Configure PATH and GOPATH variable
   ansible.builtin.blockinfile:
     path: $HOME/.zshrc
     block: |

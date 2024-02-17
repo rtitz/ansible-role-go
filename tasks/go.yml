@@ -1,35 +1,35 @@
 ---
 
 # Download 
-- name: Download GO (for x86_64)
+- name: Download Go (for x86_64)
   ansible.builtin.get_url:
     url: "{{ go_url_x86_64 }}"
     dest: "{{ go_download_dir }}/"
   when: ansible_architecture == 'x86_64'
   register: download_go1
 
-- name: Download GO (for i386)
+- name: Download Go (for i386)
   ansible.builtin.get_url:
     url: "{{ go_url_i386 }}"
     dest: "{{ go_download_dir }}/"
   when: ansible_architecture == 'i386'
   register: download_go2
 
-- name: Download GO (for aarch64)
+- name: Download Go (for aarch64)
   ansible.builtin.get_url:
     url: "{{ go_url_aarch64 }}"
     dest: "{{ go_download_dir }}/"
   when: ansible_architecture == 'aarch64'
   register: download_go3
 
-- name: Download GO (for armv7l)
+- name: Download Go (for armv7l)
   ansible.builtin.get_url:
     url: "{{ go_url_armv7l }}"
     dest: "{{ go_download_dir }}/"
   when: ansible_architecture == 'armv7l'
   register: download_go4
 
-- name: Download GO (for armv6l)
+- name: Download Go (for armv6l)
   ansible.builtin.get_url:
     url: "{{ go_url_armv6l }}"
     dest: "{{ go_download_dir }}/"
@@ -37,14 +37,14 @@
   register: download_go5
 
 # Extract and set path
-- name: Extracting GO
+- name: Extracting Go
   ansible.builtin.shell:
     cmd: rm -rf /usr/local/go && tar -C /usr/local -xzf {{ go_download_dir }}/{{ go_version }}*.tar.gz
   changed_when: false
   become: true
   when: (download_go1.changed) or (download_go2.changed) or (download_go3.changed) or (download_go4.changed) or (download_go5.changed)
 
-- name: Add GO bin dir to system-wide $PATH
+- name: Add Go bin directory to system-wide $PATH
   ansible.builtin.copy:
     dest: /etc/profile.d/go-path.sh
     content: 'PATH=$PATH:/usr/local/go/bin'
