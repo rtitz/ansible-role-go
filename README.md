@@ -1,5 +1,6 @@
 # Go Language installation via Ansible playbook
 
+  * There is also an [Ansible Collection for Go](https://github.com/rtitz/ansible-collection-go) available, you can use that instead of this single role.
   * This installs the [Go Language](https://go.dev/) tools on Linux and macOS systems
 
 ## General information
